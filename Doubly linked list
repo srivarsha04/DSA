@@ -1,0 +1,63 @@
+
+ #include <iostream>
+
+struct Node {
+    int data;
+    Node* prev;
+    Node* next;
+
+    Node(int val) : data(val), prev(nullptr), next(nullptr) {}
+};
+
+// Function to insert a node at the front of the doubly linked list
+void insertFront(Node** head, int data) {
+    // Allocate memory for newNode
+    Node* newNode = new Node(data);
+
+    // Point next of newNode to the first node of the doubly linked list
+    newNode->next = (*head);
+
+    // Point prev to NULL
+    newNode->prev = nullptr;
+
+    // Point previous of the first node (now the first node is the second node) to newNode
+    if ((*head) != nullptr)
+        (*head)->prev = newNode;
+
+    // Head points to newNode
+    (*head) = newNode;
+}
+
+// Function to print the elements of the doubly linked list
+void printList(Node* head) {
+    Node* current = head;
+    while (current != nullptr) {
+        std::cout << current->data << " ";
+        current = current->next;
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    // Creating a sample doubly linked list with nodes 1, 2, 3
+    Node* myList = new Node(1);
+    Node* second = new Node(2);
+    Node* third = new Node(3);
+
+    myList->next = second;
+    second->prev = myList;
+    second->next = third;
+    third->prev = second;
+
+    std::cout << "Original list: ";
+    printList(myList);
+
+    // Inserting node with data 6 at the front
+    insertFront(&myList, 6);
+
+    std::cout << "List after inserting node with data 6 in the beginning: ";
+    printList(myList);
+
+    return 0;
+}
+ 
